@@ -1,0 +1,50 @@
+=================================================================
+==154446==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x611000006520 at pc 0x5575674ea79a bp 0x7ffdf962d1d0 sp 0x7ffdf962d1c0
+WRITE of size 1 at 0x611000006520 thread T0
+    #0 0x5575674ea799 in xstrncpy /new/squid-5.6/compat/xstring.cc:46
+    #1 0x5575674e34b5 in SMB_Negotiate /new/squid-5.6/lib/smblib/smblib-util.c:404
+    #2 0x5575674dcf35 in init_challenge /new/squid-5.6/src/auth/ntlm/SMB_LM/ntlm_smb_lm_auth.cc:154
+    #3 0x5575674dd3a6 in make_challenge(char*, char*) /new/squid-5.6/src/auth/ntlm/SMB_LM/ntlm_smb_lm_auth.cc:182
+    #4 0x5575674dfc5b in obtain_challenge() /new/squid-5.6/src/auth/ntlm/SMB_LM/ntlm_smb_lm_auth.cc:478
+    #5 0x5575674e23c6 in manage_request() /new/squid-5.6/src/auth/ntlm/SMB_LM/ntlm_smb_lm_auth.cc:650
+    #6 0x5575674e2ad6 in main /new/squid-5.6/src/auth/ntlm/SMB_LM/ntlm_smb_lm_auth.cc:693
+    #7 0x7f1e78cc2d8f in __libc_start_call_main ../sysdeps/nptl/libc_start_call_main.h:58
+    #8 0x7f1e78cc2e3f in __libc_start_main_impl ../csu/libc-start.c:392
+    #9 0x5575674dcb44 in _start (/new/squid-5.6/src/auth/ntlm/SMB_LM/ntlm_smb_lm_auth+0x6b44)
+
+Address 0x611000006520 is a wild pointer.
+SUMMARY: AddressSanitizer: heap-buffer-overflow /new/squid-5.6/compat/xstring.cc:46 in xstrncpy
+Shadow bytes around the buggy address:
+  0x0c227fff8c50: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff8c60: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff8c70: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff8c80: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff8c90: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+=>0x0c227fff8ca0: fa fa fa fa[fa]fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff8cb0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff8cc0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff8cd0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff8ce0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff8cf0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+  Shadow gap:              cc
+==154446==ABORTING
+
